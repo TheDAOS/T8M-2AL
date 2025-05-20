@@ -87,7 +87,7 @@ function ShowTasks() {
 
                     </div>
                 </Card>
-                {!tasksData && <h1>No Data!</h1>}
+                {!tasksData && <h1 className='text-center'>No Data!</h1>}
                 {tasksData?.filter((task) => {
                     if (priority === 'All') return true;
                     if (task.priority === priority) return true;
