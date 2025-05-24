@@ -98,8 +98,8 @@ function ShowTasks() {
                     return false
                 }).filter((task) => {
                     if (!debouncedSearch) return true;
-                    return task.name.toLowerCase().includes(debouncedSearch.toLowerCase());
-                }).map((task) => (<Task task={task} />))}
+                    return task.title.toLowerCase().includes(debouncedSearch.toLowerCase());
+                }).map((task) => (<Task key={task.id} task={task} />))}
             </div>
         </div>
     );

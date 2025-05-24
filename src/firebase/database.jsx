@@ -5,7 +5,6 @@ import AuthContext from '../context/AuthContext';
 
 const URL = 'https://task-manager-application-14596-default-rtdb.firebaseio.com/tasks';
 
-// i missed Redux from question
 
 const useTasks = () => {
     const { setTasksData } = useContext(TasksContext);
@@ -49,9 +48,15 @@ const useTasks = () => {
             task.progress = !task.progress;
             const updatedStatus = { progress: task.progress };
 
-            await axios.patch(`${URL}/${user.uid}/${task.id}.json`, updatedStatus);
+            setTasksData(prevTasks => prevTasks.map(task => {
+                if (task.id === task.id)
+                    return { ...task, progress: task.progress }
+                else
+                    return task
+            }));
 
-            await getData();
+            await axios.patch(`${URL}/${user.uid}/${task.id}.json`, updatedStatus);
+            // await getData();
         } catch (error) {
             console.error(error);
         }
@@ -59,9 +64,11 @@ const useTasks = () => {
 
     const deleteTask = async (task) => {
         try {
+            setTasksData(prevTasks => prevTasks.filter(tasks => tasks.id !== task.id));
+
             await axios.delete(`${URL}/${user.uid}/${task.id}.json`);
             alert('Task Deleted');
-            await getData();
+            // await getData();
         } catch (error) {
             console.error('Error deleting task:', error);
         }
